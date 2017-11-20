@@ -1,6 +1,0 @@
-On Your Personal Computer (Mac)
-
-- Ensure you have Python 2.7 installed
-- Ensure you have Git installed and can clone from GitHub
-
-https://github.com/dbaty/Basket/archive/master.zip

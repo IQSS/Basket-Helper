@@ -10,10 +10,28 @@ The use case here is that Level 5 workstations have no internet connection for d
 
 More info: http://pythonhosted.org/Basket/
 
-### Using This Script
+### Notes About This Script
 
 This Bash script is not a wrapper for Basket, but assists in installing and setting up Basket on a Mac. For those who may not be Python savvy, it abstracts away some of the confusing aspects of using Python locally.
+
+It defaults to using Python 2.7, but this can be changed in the global variable settings.
+
+Also note: the version available on PyPI has not been updated to using https, which is a requirement for downloading modules from PyPI. However, it's fixed on GitHub.
+
+### Compatibility
+
+* This script is meant for macOS
+* It was tested on macOS 10.13
+* No guarantees it works on older versions of macOS or OS X
+* No guarantees it works on Bash for Windows
 
 ## Instructions
 
 1. Ensure you have Python 2.7 installed
+2. Clone or download the 'basket.sh' script
+3. Ensure the script is executable: `chmod u+rwx basket.sh`
+4. Execute the script: `source basket.sh`
+5. Once the script has finished, you can use Basket:
+    1. `export BASKET_ROOT="/Users/\`whoami\\`/Documents/<folder_name>"`
+    2. `basket init`
+    3. `basket download <python_module_name>`

@@ -1,26 +1,19 @@
 #!/bin/bash
 
 # Debug setting
-DEBUG=false
+# 0 = false; 1 = true
+DEBUG=0
 
 # Booleans for readability
 FALSE=0
 TRUE=1
 
+# Python version to use
+PYMAJ=2
+PYMIN=7
+
 # Basket download URL
-URL="https://github.com/dbaty/Basket/archive/master.zip"
-
-
-function basket_download {
-  echo ""
-  echo "Downloading..."
-  echo ""
-
-  debug "Downloading from ${URL} to ~/Basket.zip"
-
-  cd ~/
-  $CURL -Lo Basket.zip --progress-bar $URL
-}
+URL="https://github.com/dbaty/Basket/tarball/master"
 
 
 function basket_install {
@@ -28,11 +21,7 @@ function basket_install {
   echo "Installing..."
   echo ""
 
-  debug "Unzipping ~/Basket.zip"
-  $UNZIP -qq ~/Basket.zip
-  $PIP install -U --user ~/Basket-master/
-  debug "Removing ~/Basket.zip and ~/Basket-master"
-  $RM -rf ~/Basket.zip ~/Basket-master
+  $PIP install -U --user $URL
 }
 
 
@@ -110,29 +99,29 @@ function init {
   fi
 
   if [[ "$is_version" -eq "$FALSE" ]] || [[ -z "${PIP// }" ]]; then
-    PIP=$(which pip3)
+    PIP=$(which pip2)
     debug "'which pip2' result: ${PIP}"
-    if [[ -z "${PIP// }" ]]; then basket_quit "'pip' not found."; fi
+    if [[ -z "${PIP// }" ]]; then basket_quit "'pip' not found; is Python installed?"; fi
     getpyver
     is_version=$?
   fi
 
   if [[ "$is_version" -eq "$FALSE" ]]; then
-    basket_quit "Not able to find Python version 2.7"
+    basket_quit "Not able to find Python version ${PYMAJ}.${PYMIN}."
   fi
 }
 
 
 function getpyver {
-  local pyregex="python\s2\.7(\.[0-9])?"
+  local pyregex="python\s${PYMAJ}\.${PYMIN}(\.[0-9])?"
   local pipver=$($PIP --version)
   debug "pip version: ${pipver}"
 
   if echo "$pipver" | egrep -q "$pyregex"; then
-    debug "Python 2.7 found"
+    debug "Python ${PYMAJ}.${PYMIN} found"
     return $TRUE
   else
-    debug "Python 2.7 not found"
+    debug "Python ${PYMAJ}.${PYMIN} not found"
     return $FALSE
   fi
 }
@@ -150,10 +139,9 @@ function debug {
 # MAIN
 #
 init
-basket_download
 basket_install
-
 basket_findpath
+
 PYPATH="${PYDIR}/bin"
 
 if [[ -e "$PYPATH" ]]; then
