@@ -32,6 +32,6 @@ Also note: the version available on PyPI has not been updated to using https, wh
 3. Ensure the script is executable: `chmod u+rwx basket.sh`
 4. Execute the script: `source basket.sh`
 5. Once the script has finished, you can use Basket:
-    1. `export BASKET_ROOT="/Users/``whoami``/Documents/<folder_name>"`
+    1. `` export BASKET_ROOT="/Users/`whoami`/Documents/<folder_name>" ``
     2. `basket init`
     3. `basket download <python_module_name>`
