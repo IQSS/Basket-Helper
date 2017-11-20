@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # Debug setting
-DEBUG=true
+DEBUG=false
+
+# Booleans for readability
+FALSE=0
+TRUE=1
 
 # Basket download URL
 URL="https://github.com/dbaty/Basket/archive/master.zip"
@@ -96,7 +100,7 @@ function init {
   if [[ -z "${UNZIP// }" ]]; then basket_quit "'unzip' not found."; fi
 
   # Find pip and verify Python version
-  local is_version=false
+  local is_version=$FALSE
 
   PIP=$(which pip)
   debug "'which pip' result: ${PIP}"
@@ -104,8 +108,8 @@ function init {
     getpyver
     is_version=$?
   fi
-  
-  if [ "$is_version" = false ] || [[ -z "${PIP// }" ]]; then
+
+  if [[ "$is_version" -eq "$FALSE" ]] || [[ -z "${PIP// }" ]]; then
     PIP=$(which pip3)
     debug "'which pip2' result: ${PIP}"
     if [[ -z "${PIP// }" ]]; then basket_quit "'pip' not found."; fi
@@ -113,8 +117,8 @@ function init {
     is_version=$?
   fi
 
-  if [ "$is_version" = false ]; then
-    basket_quit "Python is not version 2.7"
+  if [[ "$is_version" -eq "$FALSE" ]]; then
+    basket_quit "Not able to find Python version 2.7"
   fi
 }
 
@@ -126,10 +130,10 @@ function getpyver {
 
   if echo "$pipver" | egrep -q "$pyregex"; then
     debug "Python 2.7 found"
-    return 1
+    return $TRUE
   else
     debug "Python 2.7 not found"
-    return 0
+    return $FALSE
   fi
 }
 
