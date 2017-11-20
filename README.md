@@ -35,4 +35,4 @@ Also note: the version available on PyPI has not been updated to using https, wh
     1. `` export BASKET_ROOT="/Users/`whoami`/Documents/<folder_name>" ``
     2. `basket init`
     3. `basket download <python_module_name>`
-    4. Copy contents of `<folder_name>` to a USB drive and trasnfer to desired system.
+    4. Copy contents of `<folder_name>` to a USB drive and transfer to desired system.
